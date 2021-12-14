@@ -1,32 +1,95 @@
-// BANK ACCOUNT
 
-// Start by creating the object and the properties. You can leave the functions empty for now if you want.
-// You'll find all the information about what properties the object should have in the readme file.
+////////////////// MAIN OBJECT ///////
+const account = {
+  /// name of account-owner ///
+  accountName: "Erika Nors",
+  /// error when wrong input --> back to menu ///
+  accountError: function () { 
+      alert("Please enter a number between 1-5");
+      atm();
+    },
+  /// the starting balance ///
+  balance: 100,
+  /// adds money if valid number is entered, if not --> error -> menu ////
+  deposit: function () {
+    let dep = parseFloat(prompt("Please enter sum to deposit"));
+    if (isNaN(dep) || dep === "" || dep <= 0 || dep === null) {
+      alert(this.accountError());
+      this.deposit();
+    } else {
+      this.balance += dep;
+      this.getBalance();
+    }
+    atm();
+  },
+   /// shows name of account-owner using variable --> back to menu ///////
+  getAccountName: function () { 
+      const getName = alert("Owner of the account is: " + this.accountName);
+      console.log(getName);
+      atm();
+  },
+   /// show how much money the account has using variable --> back to menu ///////
+  getBalance: 
+    function () { 
+      alert("The current balance is: " + this.balance);
+      atm();
+  },
+  /// subtract sum of money if valid number entered, if not --> error -> menu //////
+  withdrawal: function () { 
+    let draw = parseFloat(prompt("Please enter sum to withdraw"));
+    if (isNaN(draw) || draw === "" || draw <= 0 || draw === null) {
+      alert(this.accountError());
+      this.withdrawal();
+    } else if (draw > this.balance) {
+      alert(
+        "You must enter a valid sum!"
+      );
+      this.withdrawal();
+    } else {
+      this.balance -= draw;
+      this.getBalance();
+    }
+    atm();
+  },
+  /// OBS not end the account, only closing window, if non-confirm --> menu ///////
+  exitAccount: function () { 
+    const exit = confirm("Do you want to close this window?");
+    console.log(exit);
+    if (exit) {
+      window.close();
+    } else {
+      atm();
+    }
+  },
+};
 
-// In the deposit and withdrawal function use this code to show the prompt
-parseFloat(prompt("Put some proper message here"));
-// You need to change the message of course. You should also do some research why parseFloat() is used here
-// answer by making a comment in the code.
-// Be aware of that you need to add some code to this so you can display the actual input.
-
-// In the deposit and withdrawal function you also need to handle som potential errors.
-// To handle one of the potential error you can use this piece of code
-isNaN(variableName);
-// you need to change the variableName to your actual variable.
-// you also need to check some other conditions here and use a logical operator.
-// try to say the sentece out loud or think it:
-// "A user should not be able to put 0 or negative numbers or empty string or a type that is not a number"
-// Do you know what operator you should use?
-
-// In the accountError and accountExit function you can use this to show a message to the user:
-alert("your code here and maybe properties");
-// of course you need to put a proper message and you might need to display some of the properties.
-
-// STARTER FUNCTION
+////////////////// MENU //////
+/// the message that informs how to navigate, if other --> error //
 function atm() {
-  let choice = parseInt(prompt("Display menu choices here"));
-  //prompt user for choice.
-
-  // you can use the variable choice for your switch or if/else statement
-  // so choice will hold the value of the user input.
+  let choice = parseInt(
+    prompt(
+      "Please enter one of the following numbers, 1) See balance 2) Make a deposit 3) Make a withdrawal 4) Get account name 5) Exit"
+    )
+  );
+///////// the choices ///////
+  if (choice === 1) {
+    account.getBalance();
+  } else if (choice === 2) {
+    account.deposit();
+  } else if (choice === 3) {
+    console.log(account.withdrawal());
+  } else if (choice === 4) {
+    console.log(account.getAccountName());
+  } else if (choice === 5) {
+    console.log(account.exitAccount());
+  } else {
+    console.log(account.accountError());
+  }
 }
+atm();
+// a switch statment isnt used since there arent a lot of options, 
+// or options nested inside of eachother.
+// it is much easier to debug a lot of switch statements compared to ifs.
+// in this case, there are 6 different boolean choices, that dont need further choices,
+// and the overview is easy.
+//
